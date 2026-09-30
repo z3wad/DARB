@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>درب | DARB - منصة السياحة التفاعلية في الأردن</title>
+    <!-- Cairo Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-limestone: #FAF7F2;
+            --card-bg: #FFFFFF;
+            --darb-red: #C85A32;
+            --darb-red-hover: #B04B26;
+            --olive-green: #52634F;
+            --text-dark: #1F2421;
+            --text-muted: #6E7570;
+            --border-color: #E8E3DA;
+            --shadow-soft: 0 12px 32px rgba(31, 36, 33, 0.08);
+            --radius-lg: 20px;
+            --radius-md: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-limestone);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Header Navigation */
+        header {
+            background: rgba(250, 247, 242, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.2rem 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.9rem;
+            font-weight: 900;
+            color: var(--darb-red);
+            cursor: pointer;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: var(--olive-green);
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        nav a.active,
+        nav a:hover {
+            color: var(--darb-red);
+        }
+
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            right: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--darb-red);
+            border-radius: 2px;
+        }
+
+        .auth-status {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-auth {
+            background-color: var(--olive-green);
+            color: white;
+            padding: 0.6rem 1.4rem;
+            border-radius: 25px;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .btn-auth:hover {
+            background-color: #3F4E3C;
+            transform: translateY(-1px);
+        }
+
+        .btn-logout-danger {
+            background-color: #A93226;
+            color: white;
+            padding: 0.55rem 1.2rem;
+            border-radius: 25px;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.85rem;
+            display: none;
+            transition: background-color 0.3s;
+        }
+
+        .btn-logout-danger:hover {
+            background-color: #88251B;
+        }
+
+        .view-section {
+            display: none;
+            padding: 2.5rem 6%;
+            min-height: 85vh;
+        }
+
+        .view-section.active {
+            display: block;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 2.5rem;
+            align-items: stretch;
+            margin-bottom: 3.5rem;
+        }
+
+        @media (max-width: 980px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .hero-banner {
+            border-radius: var(--radius-lg);
+            background: linear-gradient(180deg, rgba(31, 36, 33, 0.1) 0%, rgba(31, 36, 33, 0.85) 100%),
+                url('https://upload.wikimedia.org/wikipedia/commons/2/2f/Treasury_petra_crop.jpeg') center/cover no-repeat;
+            padding: 3.5rem;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            min-height: 480px;
+            box-shadow: var(--shadow-soft);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-banner .badge {
+            background: rgba(200, 90, 50, 0.92);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            width: fit-content;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(4px);
+        }
+
+        .hero-banner h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            line-height: 1.25;
+            margin-bottom: 0.8rem;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .planner-card {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-soft);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 800;
+            margin-bottom: 0.6rem;
+            font-size: 0.95rem;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .option-btn {
+            border: 1px solid var(--border-color);
+            background: var(--bg-limestone);
+            padding: 0.75rem;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            text-align: center;
+            font-weight: 700;
+            color: var(--text-dark);
+            transition: all 0.2s;
+        }
+
+        .option-btn.selected {
+            border-color: var(--darb-red);
+            background-color: #FDF1EC;
+            color: var(--darb-red);
+        }
+
+        .tags-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag-btn {
+            border: 1px solid var(--border-color);
+            background: var(--bg-limestone);
+            padding: 0.55rem 1.2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.88rem;
+            font-weight: 700;
+            transition: all 0.2s;
+        }
+
+        .tag-btn.selected {
+            background: var(--darb-red);
+            color: white;
+            border-color: var(--darb-red);
+        }
+
+        .range-slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: var(--border-color);
+            outline: none;
+            accent-color: var(--darb-red);
+            cursor: pointer;
+        }
+
+        .btn-generate {
+            width: 100%;
+            background: var(--darb-red);
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 1.1rem;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(200, 90, 50, 0.3);
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-generate:hover {
+            background: var(--darb-red-hover);
+        }
+
+        /* Suggested Places Section Styles */
+        .suggested-section {
+            margin-top: 2rem;
+        }
+
+        .section-header {
+            margin-bottom: 1.8rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--text-dark);
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .places-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.8rem;
+        }
+
+        .place-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .place-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 16px 36px rgba(31, 36, 33, 0.12);
+        }
+
+        .place-img-wrapper {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .place-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .place-card:hover .place-img-wrapper img {
+            transform: scale(1.05);
+        }
+
+        .place-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(31, 36, 33, 0.75);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+
+        .place-content {
+            padding: 1.4rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
+        }
+
+        .place-content h3 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            margin-bottom: 0.4rem;
+        }
+
+        .place-content p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-bottom: 1.2rem;
+            line-height: 1.5;
+        }
+
+        .place-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 0.8rem;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--olive-green);
+        }
+
+        .route-container {
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 2rem;
+            height: 75vh;
+        }
+
+        @media (max-width: 980px) {
+            .route-container {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+        }
+
+        .itinerary-panel {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: 1.8rem;
+            overflow-y: auto;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .day-box {
+            margin-bottom: 1.8rem;
+            position: relative;
+            padding-right: 1.2rem;
+            border-right: 3px solid var(--darb-red);
+        }
+
+        .event-card {
+            background: var(--bg-limestone);
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            margin-top: 0.6rem;
+            font-size: 0.9rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .map-panel {
+            background: linear-gradient(0deg, rgba(250, 247, 242, 0.82), rgba(250, 247, 242, 0.82)),
+                url('https://upload.wikimedia.org/wikipedia/commons/2/20/Wadi_Rum_-_Jordan.jpg') center/cover no-repeat;
+            border-radius: var(--radius-lg);
+            position: relative;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .map-overlay-card {
+            position: absolute;
+            bottom: 25px;
+            right: 25px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            padding: 1.2rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-soft);
+            max-width: 300px;
+            border: 1px solid var(--border-color);
+        }
+
+        .passport-header-bg {
+            background: linear-gradient(180deg, rgba(31, 36, 33, 0.3) 0%, rgba(31, 36, 33, 0.7) 100%),
+                url('https://upload.wikimedia.org/wikipedia/commons/0/07/Jerash_Forum_1.jpg') center/cover no-repeat;
+            height: 160px;
+            border-radius: var(--radius-lg);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: flex-end;
+            padding: 1.5rem;
+            color: white;
+            box-shadow: var(--shadow-soft);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .passport-header-bg img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4;
+            z-index: 0;
+        }
+
+        .passport-header-bg h2 {
+            position: relative;
+            z-index: 1;
+        }
+
+        .passport-layout {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 2rem;
+        }
+
+        @media (max-width: 900px) {
+            .passport-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .stamps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Passport Stamp Card with Background Pictures */
+        .stamp-card {
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2.2rem 1rem;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+            position: relative;
+            overflow: hidden;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .stamp-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.18);
+        }
+
+        .stamp-card.stamp-petra {
+            background: linear-gradient(180deg, rgba(31, 36, 33, 0.45) 0%, rgba(31, 36, 33, 0.85) 100%),
+                url('https://upload.wikimedia.org/wikipedia/commons/2/2f/Treasury_petra_crop.jpeg') center/cover no-repeat;
+        }
+
+        .stamp-card.stamp-wadirum {
+            background: linear-gradient(180deg, rgba(31, 36, 33, 0.45) 0%, rgba(31, 36, 33, 0.85) 100%),
+                url("./wadi rum.jpg") center/cover no-repeat;
+        }
+
+        .stamp-card.stamp-shobak {
+            background: linear-gradient(180deg, rgba(31, 36, 33, 0.55) 0%, rgba(31, 36, 33, 0.90) 100%),
+                url("./jarash castlr.jpg") center/cover no-repeat;
+        }
+
+        .stamp-card.locked {
+            opacity: 0.65;
+            filter: grayscale(80%);
+        }
+
+        .stamp-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 2px dashed #FFFFFF;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem auto;
+            color: #FFFFFF;
+            font-size: 1.6rem;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+        }
+
+        .stamp-card .stamp-title {
+            font-weight: 900;
+            font-size: 1.1rem;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+        }
+
+        .stamp-card .stamp-loc {
+            font-size: 0.85rem;
+            color: #E8E3DA;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        .profile-sidebar {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .btn-stamp-trigger {
+            margin-top: 1.2rem;
+            width: 100%;
+            background: var(--olive-green);
+            color: white;
+            border: none;
+            padding: 0.85rem;
+            border-radius: var(--radius-md);
+            font-weight: 800;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-stamp-trigger:hover {
+            background: #3F4E3C;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(31, 36, 33, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-card {
+            background: white;
+            padding: 2.2rem;
+            border-radius: var(--radius-lg);
+            width: 90%;
+            max-width: 420px;
+            position: relative;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .auth-notice {
+            background-color: #FDEDEC;
+            color: #A93226;
+            padding: 0.8rem;
+            border-radius: var(--radius-md);
+            font-size: 0.88rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: none;
+            text-align: center;
+            border: 1px solid #FADBD8;
+        }
+
+        .modal-card input {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+        }
+
+        .error-msg {
+            color: #A93226;
+            font-size: 0.82rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            display: none;
+        }
+
+        .modal-card .btn-submit {
+            width: 100%;
+            padding: 0.85rem;
+            background: var(--darb-red);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-weight: 800;
+            cursor: pointer;
+            margin-bottom: 0.6rem;
+        }
+
+        .modal-card .btn-google {
+            width: 100%;
+            padding: 0.85rem;
+            background: #4285F4;
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 18px;
+            left: 18px;
+            cursor: pointer;
+            font-size: 1.3rem;
+            color: var(--text-muted);
+        }
+
+        footer {
+            background: #1F2421;
+            color: #C2C7C3;
+            padding: 2.5rem 6%;
+            text-align: center;
+            font-size: 0.88rem;
+            margin-top: 4rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="logo" id="logo-btn">
+            <i class="fa-solid fa-compass"></i> درب <span>DARB</span>
+        </div>
+        <nav>
+            <a id="nav-home" class="active" onclick="switchView('home')">الرئيسية</a>
+            <a id="nav-route" onclick="switchView('route')">المسار التفاعلي</a>
+            <a id="nav-passport" onclick="switchView('passport')">جواز السفر الرقمي</a>
+        </nav>
+        <div class="auth-status">
+            <span id="user-display-name" style="font-size: 0.9rem; font-weight: 700;">زائر</span>
+            <button id="btn-login-trigger" class="btn-auth">تسجيل الدخول</button>
+            <button id="btn-logout" class="btn-logout-danger" onclick="logoutUser()">
+                <i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج
+            </button>
+        </div>
+    </header>
+
+    <!-- VIEW 1: HOME & PLANNER -->
+    <section id="view-home" class="view-section active">
+        <div class="hero-grid">
+            <div class="hero-banner">
+                <span class="badge">رحلات مصممة بالذكاء الاصطناعي</span>
+                <h1>اكتشف عمق الأردن عبر مسارات وثائقية وتجارب مجتمعية</h1>
+                <p style="font-size: 1.05rem; opacity: 0.95;">نربط المعالم التاريخية بالجواهر المخفية والمطابخ المحلية
+                    لخلق رحلة متكاملة لا تُنسى.</p>
+            </div>
+
+            <div class="planner-card">
+                <div>
+                    <h2 style="font-size: 1.5rem; font-weight: 900; margin-bottom: 0.3rem;">صمم مسار رحلتك</h2>
+                    <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.8rem;">قم بإعداد تفاصيل
+                        رحلتك ليتم حفظها بملفك الشخصي</p>
+
+                    <div class="form-group">
+                        <label>مدة الرحلة</label>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectDuration(this, 3)">٣ أيام</button>
+                            <button class="option-btn selected" onclick="selectDuration(this, 7)">٧ أيام</button>
+                            <button class="option-btn" onclick="selectDuration(this, 10)">١٠+ أيام</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>مستوى الميزانية: <span id="budget-label" style="color: var(--darb-red);">ميزانية
+                                متوسطة</span></label>
+                        <input type="range" id="budget-slider" class="range-slider" min="1" max="3" value="2" step="1">
+                    </div>
+
+                    <div class="form-group">
+                        <label>الاهتمامات والتجارب</label>
+                        <div class="tags-grid">
+                            <button class="tag-btn selected" onclick="toggleTag(this)">طعام محلي</button>
+                            <button class="tag-btn selected" onclick="toggleTag(this)">طبيعة ومغامرة</button>
+                            <button class="tag-btn selected" onclick="toggleTag(this)">تاريخ وآثار</button>
+                            <button class="tag-btn" onclick="toggleTag(this)">ثقافة وفنون</button>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-generate" id="btn-save-plan">
+                    <i class="fa-solid fa-lock" id="btn-lock-icon"></i>
+                    <span>إنشاء المسار التفاعلي</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Suggested Places Section -->
+        <div class="suggested-section">
+            <div class="section-header">
+                <h2>أماكن مقترحة للزيارة</h2>
+                <p>وجهات وتجارب مميزة يُنصح بها أثناء تخطيط رحلتك المقبلة</p>
+            </div>
+
+            <div class="places-grid">
+                <!-- Place 1: Petra -->
+                <div class="place-card">
+                    <div class="place-img-wrapper">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Treasury_petra_crop.jpeg"
+                            alt="البتراء">
+                        <span class="place-tag">تاريخ وآثار</span>
+                    </div>
+                    <div class="place-content">
+                        <div>
+                            <h3>البتراء (المدينة الوردية)</h3>
+                            <p>عاصمة النبطيين القديمة المحفورة في الصخور الورديّة، إحدى عجائب الدنيا السبع الحديثة.</p>
+                        </div>
+                        <div class="place-footer">
+                            <span>تستحق 1-2 يوم</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Place 2: Wadi Rum -->
+                <div class="place-card">
+                    <div class="place-img-wrapper">
+                        <img src="./wadi rum.jpg" alt="وادي رم">
+                        <span class="place-tag">طبيعة ومغامرة</span>
+                    </div>
+                    <div class="place-content">
+                        <div>
+                            <h3>وادي رم (وادي القمر)</h3>
+                            <p>صحراء خلابة وجبال رملية مميزة توفر تجربة تخييم بدوية ورصد النجوم وتجول بالسيارات
+                                الرباعية.</p>
+                        </div>
+                        <div class="place-footer">
+                            <span>تستحق 1 يوم</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Place 3: Jerash -->
+                <div class="place-card">
+                    <div class="place-img-wrapper">
+                        <img src="./jarash.webp" alt="جرش">
+                        <span class="place-tag">ثقافة وتاريخ</span>
+                    </div>
+                    <div class="place-content">
+                        <div>
+                            <h3>مدينة جرش الأثرية</h3>
+                            <p>واحدة من أفضل المدن الرومانية المحفوظة في العالم، وتتميز بأعمدتها الممتدة ومسارحها
+                                العريقة.</p>
+                        </div>
+                        <div class="place-footer">
+                            <span>تستحق ٤ ساعات</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Place 4: Dead Sea -->
+                <div class="place-card">
+                    <div class="place-img-wrapper">
+                        <img src="./dead see.jpg" alt="البحر الميت">
+                        <span class="place-tag">استرخاء وعلاج</span>
+                    </div>
+                    <div class="place-content">
+                        <div>
+                            <h3>البحر الميت</h3>
+                            <p>أخفض نقطة على سطح الأرض، مشهور بمياهه الغنية بالمعادن وطينه الطبيعي العلاجي.</p>
+                        </div>
+                        <div class="place-footer">
+                            <span>تستحق 1 يوم</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIEW 2: INTERACTIVE MAP & ROUTE -->
+    <section id="view-route" class="view-section">
+        <h2 style="font-size: 1.8rem; font-weight: 900;">المسار التفاعلي المخصص</h2>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.8rem;" id="route-subtitle">
+            مسار محدد بناءً على إعداداتك
+        </p>
+
+        <div class="route-container">
+            <div class="itinerary-panel" id="itinerary-list">
+                <!-- Dynamic Content -->
+            </div>
+
+            <div class="map-panel">
+                <img src="./jordan.jpg" alt="jo">
+                <svg width="100%" height="100%" viewBox="0 0 500 500">
+                    <path d="M 60 110 Q 160 60 260 130 T 440 110" stroke="rgba(200,90,50,0.3)" stroke-width="3"
+                        fill="none" />
+                    <path d="M 180 130 L 230 230 L 290 390" stroke="#C85A32" stroke-width="4" stroke-dasharray="7,7"
+                        fill="none" />
+                    <circle cx="180" cy="130" r="10" fill="#52634F" />
+                    <text x="195" y="135" font-family="Cairo" font-size="13" font-weight="800"
+                        fill="#1F2421">البتراء</text>
+                    <circle cx="230" cy="230" r="8" fill="#C85A32" />
+                    <text x="245" y="235" font-family="Cairo" font-size="12" font-weight="800" fill="#C85A32">السيق
+                        البارد (جوهرة مخفية)</text>
+                    <circle cx="290" cy="390" r="10" fill="#52634F" />
+                    <text x="305" y="395" font-family="Cairo" font-size="13" font-weight="800" fill="#1F2421">وادي
+                        رم</text>
+                </svg>
+
+                <div class="map-overlay-card">
+                    <img src="../../Downloads/Gemini_Generated_Image_hc7poihc7poihc7p.jpg" alt="route"
+                        style="width: 100%; max-height: 160px; object-fit: cover; border-radius: 8px; margin-bottom: 0.8rem; display: block;" />
+                    <h4 style="color: var(--darb-red); font-weight: 800; margin-bottom: 0.3rem;">
+                        <i class="fa-solid fa-route"></i> خيط القصة والربط
+                    </h4>
+                    <p style="font-size: 0.85rem; color: var(--text-dark);">
+                        ربط المسار الرئيسي بالنقاط المجتمعية والتجارب المحلية المجاورة.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- VIEW 3: PASSPORT & STAMPS -->
+    <section id="view-passport" class="view-section">
+        <div class="passport-header-bg">
+            <img src="./post cards.jpg" alt="passport">
+            <h2 style="font-size: 1.8rem; font-weight: 900; text-shadow: 0 2px 6px rgba(0,0,0,0.5);">جواز السفر الرقمي
+                والأختام المكتسبة</h2>
+        </div>
+
+        <div class="passport-layout">
+            <div>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.8rem;">تُحفظ الأختام المكتسبة
+                    مباشرة في حسابك وقاعدة البيانات</p>
+
+                <div class="stamps-grid" id="stamps-container">
+                    <!-- Dynamic Stamp Cards with Background Pictures -->
+                </div>
+
+                <button class="btn-stamp-trigger" id="btn-claim-stamp">
+                    <i class="fa-solid fa-location-dot"></i> تسجيل الوصول بالـ GPS (قلعة الشوبك)
+                </button>
+            </div>
+
+            <div class="profile-sidebar">
+                <i class="fa-solid fa-user-circle"
+                    style="font-size: 4.5rem; color: var(--olive-green); margin-bottom: 0.8rem;"></i>
+                <div class="user-name" id="profile-name" style="font-weight: 900; font-size: 1.2rem;">زائر</div>
+                <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;" id="sync-status">وضع
+                    العرض المحلي</div>
+
+                <button id="sidebar-logout-btn" class="btn-logout-danger"
+                    style="margin-top: 1.2rem; width: 100%; border-radius: var(--radius-md);" onclick="logoutUser()">
+                    <i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Auth Modal -->
+    <div class="modal-overlay" id="auth-modal">
+        <div class="modal-card">
+            <span class="close-modal" id="close-modal-btn">&times;</span>
+            <div id="auth-notice" class="auth-notice">
+                <i class="fa-solid fa-lock"></i> يرجى تسجيل الدخول أولاً لتكن قادراً على إنشاء وبناء مسار رحلتك!
+            </div>
+            <h3 id="modal-title" style="font-size: 1.3rem; font-weight: 800; margin-bottom: 1.2rem;">تسجيل الدخول / حساب
+                جديد</h3>
+            <form id="auth-form" novalidate>
+                <input type="email" id="auth-email" placeholder="البريد الإلكتروني (مثال: name@domain.com)" required>
+                <div id="email-error" class="error-msg">البريد الإلكتروني غير صحيح أو غير موجود!</div>
+
+                <input type="password" id="auth-password" placeholder="كلمة المرور (٦ خانات على الأقل)" required
+                    minlength="6">
+                <div id="pass-error" class="error-msg">كلمة المرور قصيرة جداً!</div>
+
+                <button type="submit" class="btn-submit">تسجيل الدخول / إنشاء حساب</button>
+            </form>
+            <button class="btn-google" id="btn-google-auth"><i class="fa-brands fa-google"></i> متابعة بواسطة
+                Google</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>فريق DevCore &copy; 2026 - مشروع درب (DARB) | التصميم الوثائقي التفاعلي</p>
+    </footer>
+
+    <!-- Firebase Modules -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import {
+            getAuth,
+            createUserWithEmailAndPassword,
+            signInWithEmailAndPassword,
+            fetchSignInMethodsForEmail,
+            sendEmailVerification,
+            signInWithPopup,
+            GoogleAuthProvider,
+            onAuthStateChanged,
+            signOut
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        let auth = null;
+        let db = null;
+        let firebaseActive = false;
+
+        try {
+            if (firebaseConfig.apiKey && firebaseConfig.apiKey !== "YOUR_API_KEY") {
+                const app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+                firebaseActive = true;
+            }
+        } catch (e) {
+            console.warn("Running in local mode without live Firebase credentials.");
+        }
+
+        let currentUser = null;
+        let selectedDuration = 7;
+        let selectedBudget = 2;
+        let localStamps = { petra: true, wadirum: true, shobak: false };
+
+        function isValidEmailFormat(email) {
+            const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            return regex.test(email);
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const budgetSlider = document.getElementById("budget-slider");
+            const budgetLabel = document.getElementById("budget-label");
+
+            budgetSlider.addEventListener("input", (e) => {
+                selectedBudget = parseInt(e.target.value);
+                if (selectedBudget === 1) budgetLabel.innerText = "ميزانية اقتصادية";
+                else if (selectedBudget === 2) budgetLabel.innerText = "ميزانية متوسطة";
+                else if (selectedBudget === 3) budgetLabel.innerText = "ميزانية فاخرة";
+            });
+
+            document.getElementById("logo-btn").addEventListener("click", () => switchView('home'));
+            document.getElementById("btn-save-plan").addEventListener("click", saveAndGeneratePlan);
+            document.getElementById("btn-claim-stamp").addEventListener("click", claimGPSStamp);
+
+            const modal = document.getElementById("auth-modal");
+            document.getElementById("btn-login-trigger").addEventListener("click", () => openAuthModal(false));
+            document.getElementById("close-modal-btn").addEventListener("click", () => modal.classList.remove("active"));
+
+            // Auth Submission
+            document.getElementById("auth-form").addEventListener("submit", async (e) => {
+                e.preventDefault();
+
+                const emailInput = document.getElementById("auth-email");
+                const passInput = document.getElementById("auth-password");
+                const emailError = document.getElementById("email-error");
+                const passError = document.getElementById("pass-error");
+
+                emailError.style.display = "none";
+                passError.style.display = "none";
+
+                const email = emailInput.value.trim();
+                const password = passInput.value;
+
+                if (!isValidEmailFormat(email)) {
+                    emailError.innerText = "صيغة البريد الإلكتروني غير صحيحة!";
+                    emailError.style.display = "block";
+                    return;
+                }
+
+                if (password.length < 6) {
+                    passError.style.display = "block";
+                    return;
+                }
+
+                if (firebaseActive && auth) {
+                    try {
+                        const existingMethods = await fetchSignInMethodsForEmail(auth, email);
+
+                        if (existingMethods.length > 0) {
+                            await signInWithEmailAndPassword(auth, email, password);
+                        } else {
+                            const userCred = await createUserWithEmailAndPassword(auth, email, password);
+                            await sendEmailVerification(userCred.user);
+                            alert("تم إنشاء حساب جديد! تم إرسال رابط تأكيد إلى بريدك الإلكتروني للتحقق منه.");
+                        }
+                        modal.classList.remove("active");
+                    } catch (err) {
+                        if (err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
+                            passError.innerText = "كلمة المرور غير صحيحة!";
+                            passError.style.display = "block";
+                        } else if (err.code === 'auth/invalid-email') {
+                            emailError.innerText = "البريد الإلكتروني غير صحيح أو غير موجود!";
+                            emailError.style.display = "block";
+                        } else {
+                            alert("حدث خطأ: " + err.message);
+                        }
+                    }
+                } else {
+                    setUserState(email.split('@')[0], true);
+                    modal.classList.remove("active");
+                }
+            });
+
+            document.getElementById("btn-google-auth").addEventListener("click", () => {
+                if (firebaseActive && auth) {
+                    const provider = new GoogleAuthProvider();
+                    signInWithPopup(auth, provider)
+                        .then(() => modal.classList.remove("active"))
+                        .catch((err) => alert("خطأ في تسجيل Google: " + err.message));
+                } else {
+                    setUserState("مستخدم Google", true);
+                    modal.classList.remove("active");
+                }
+            });
+
+            renderStamps(localStamps);
+            renderItineraryUI({ duration: 7, budget: 2 });
+        });
+
+        if (firebaseActive && auth) {
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    currentUser = user;
+                    setUserState(user.displayName || user.email || "مستخدم", true);
+                    listenToUserData(user.uid);
+                } else {
+                    currentUser = null;
+                    setUserState("زائر", false);
+                }
+            });
+        }
+
+        window.logoutUser = async function () {
+            if (firebaseActive && auth) {
+                await signOut(auth);
+            }
+            currentUser = null;
+            setUserState("زائر", false);
+            switchView('home');
+        };
+
+        function openAuthModal(triggeredByPlanner = false) {
+            const modal = document.getElementById("auth-modal");
+            const notice = document.getElementById("auth-notice");
+            if (triggeredByPlanner) {
+                notice.style.display = "block";
+            } else {
+                notice.style.display = "none";
+            }
+            modal.classList.add("active");
+        }
+
+        function setUserState(name, isLoggedIn) {
+            document.getElementById('user-display-name').innerText = name;
+            document.getElementById('profile-name').innerText = name;
+
+            const loginBtn = document.getElementById('btn-login-trigger');
+            const logoutBtn = document.getElementById('btn-logout');
+            const sidebarLogoutBtn = document.getElementById('sidebar-logout-btn');
+            const lockIcon = document.getElementById('btn-lock-icon');
+
+            if (isLoggedIn) {
+                loginBtn.style.display = 'none';
+                logoutBtn.style.display = 'inline-block';
+                if (sidebarLogoutBtn) sidebarLogoutBtn.style.display = 'block';
+                if (lockIcon) lockIcon.style.display = 'none';
+            } else {
+                loginBtn.style.display = 'inline-block';
+                logoutBtn.style.display = 'none';
+                if (sidebarLogoutBtn) sidebarLogoutBtn.style.display = 'none';
+                if (lockIcon) lockIcon.style.display = 'inline-block';
+            }
+
+            document.getElementById('sync-status').innerText = isLoggedIn
+                ? (firebaseActive ? "متصل بـ Firebase ✅" : "حساب تجريبي محلي")
+                : "وضع العرض المحلي";
+        }
+
+        function listenToUserData(userId) {
+            if (!db) return;
+            const userRef = doc(db, "users", userId);
+            onSnapshot(userRef, (docSnap) => {
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    if (data.stamps) renderStamps(data.stamps);
+                    if (data.currentPlan) renderItineraryUI(data.currentPlan);
+                } else {
+                    setDoc(userRef, {
+                        stamps: { petra: true, wadirum: true, shobak: false },
+                        currentPlan: { duration: 7, budget: 2 }
+                    });
+                }
+            });
+        }
+
+        async function saveAndGeneratePlan() {
+            if (!currentUser && document.getElementById('user-display-name').innerText === 'زائر') {
+                openAuthModal(true);
+                return;
+            }
+
+            const planData = {
+                duration: selectedDuration,
+                budget: selectedBudget,
+                updatedAt: new Date().toISOString()
+            };
+
+            if (firebaseActive && currentUser && db) {
+                const userRef = doc(db, "users", currentUser.uid);
+                await setDoc(userRef, { currentPlan: planData }, { merge: true });
+            }
+
+            renderItineraryUI(planData);
+            switchView('route');
+        }
+
+        async function claimGPSStamp() {
+            if (!currentUser && document.getElementById('user-display-name').innerText === 'زائر') {
+                openAuthModal(true);
+                return;
+            }
+
+            localStamps.shobak = true;
+            renderStamps(localStamps);
+
+            if (firebaseActive && currentUser && db) {
+                const userRef = doc(db, "users", currentUser.uid);
+                await setDoc(userRef, { stamps: { shobak: true } }, { merge: true });
+            }
+
+            alert("تهانينا! تم الحصول على ختم قلعة الشوبك بنجاح.");
+        }
+
+        function renderStamps(stamps) {
+            const container = document.getElementById('stamps-container');
+            container.innerHTML = `
+                <div class="stamp-card stamp-petra ${stamps.petra ? '' : 'locked'}">
+                    <div class="stamp-icon"><i class="fa-solid fa-gem"></i></div>
+                    <div class="stamp-title">المدينة الوردية</div>
+                    <div class="stamp-loc">البتراء</div>
+                </div>
+                <div class="stamp-card stamp-wadirum ${stamps.wadirum ? '' : 'locked'}">
+                    <div class="stamp-icon"><i class="fa-solid fa-campground"></i></div>
+                    <div class="stamp-title">بدو الصحراء</div>
+                    <div class="stamp-loc">وادي رم</div>
+                </div>
+                <div class="stamp-card stamp-shobak ${stamps.shobak ? '' : 'locked'}">
+                    <div class="stamp-icon"><i class="fa-solid ${stamps.shobak ? 'fa-shield-halved' : 'fa-lock'}"></i></div>
+                    <div class="stamp-title">حارس البوابة</div>
+                    <div class="stamp-loc">قلعة الشوبك / جرش</div>
+                </div>
+            `;
+        }
+
+        function renderItineraryUI(plan) {
+            const container = document.getElementById('itinerary-list');
+            document.getElementById('route-subtitle').innerText = `${plan.duration || 7} أيام • مسار مخصص محفوظ`;
+
+            container.innerHTML = `
+                <div class="day-box">
+                    <div style="font-weight:900; color:var(--darb-red); font-size: 1.05rem;">اليوم ١: استكشاف البتراء والجواهر المجاورة</div>
+                    <div class="event-card"><strong>السيق البارد (Little Petra)</strong><br><span style="color:var(--text-muted);">زيارة هادئة بعيداً عن الاكتظاظ</span></div>
+                    <div class="event-card"><strong>عشاء ومطبخ محلي</strong><br><span style="color:var(--text-muted);">تجربة طعامتقليدية من إعداد أهل المنطقة</span></div>
+                </div>
+                <div class="day-box">
+                    <div style="font-weight:900; color:var(--darb-red); font-size: 1.05rem;">اليوم ٢: ليلة نجوم وادي رم</div>
+                    <div class="event-card"><strong>جولة سيارات الصحراء</strong><br><span style="color:var(--text-muted);">تتبع المسارات البدوية والتخييم الجبلي</span></div>
+                </div>
+            `;
+        }
+
+        window.switchView = function (viewName) {
+            document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+            document.getElementById('view-' + viewName).classList.add('active');
+            if (document.getElementById('nav-' + viewName)) document.getElementById('nav-' + viewName).classList.add('active');
+        };
+
+        window.selectDuration = function (btn, days) {
+            btn.parentElement.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            selectedDuration = days;
+        };
+
+        window.toggleTag = function (btn) {
+            btn.classList.toggle('selected');
+        };
+    </script>
+</body>
+
+</html>

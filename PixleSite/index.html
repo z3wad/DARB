@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>درب | DARB - منصة السياحة التفاعلية في الأردن</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo" id="logo-btn">
+            <i class="fa-solid fa-compass"></i> درب <span>DARB</span>
+        </div>
+        <nav>
+            <a id="nav-home" class="active" onclick="switchView('home')">الرئيسية</a>
+            <a id="nav-route" onclick="switchView('route')">المسار التفاعلي</a>
+            <a id="nav-passport" onclick="switchView('passport')">جواز السفر الرقمي</a>
+        </nav>
+        <div class="auth-status">
+            <span id="user-display-name" style="font-size: 0.9rem; font-weight: 700;">زائر</span>
+            <button id="btn-login-trigger" class="btn-auth">تسجيل الدخول</button>
+            <button id="btn-logout" class="btn-logout-danger" onclick="logoutUser()">
+                <i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج
+            </button>
+        </div>
+    </header>
+
+    <section id="view-home" class="view-section active">
+        <div class="hero-grid">
+            <div class="hero-banner">
+                <span class="badge">رحلات مصممة بالذكاء الاصطناعي</span>
+                <h1>اكتشف عمق الأردن عبر مسارات وثائقية وتجارب مجتمعية</h1>
+                <p style="font-size: 1.05rem; opacity: 0.95;">نربط المعالم التاريخية بالجواهر المخفية والمطابخ المحلية
+                    لخلق رحلة متكاملة لا تُنسى.</p>
+            </div>
+
+            <div class="planner-card">
+                <div>
+                    <h2 style="font-size: 1.5rem; font-weight: 900; margin-bottom: 0.3rem;">صمم مسار رحلتك</h2>
+                    <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.8rem;">قم بإعداد تفاصيل
+                        رحلتك ليتم حفظها بملفك الشخصي</p>
+
+                    <div class="form-group">
+                        <label>مدة الرحلة</label>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="selectDuration(this, 3)">٣ أيام</button>
+                            <button class="option-btn selected" onclick="selectDuration(this, 7)">٧ أيام</button>
+                            <button class="option-btn" onclick="selectDuration(this, 10)">١٠+ أيام</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>مستوى الميزانية: <span id="budget-label" style="color: var(--darb-red);">ميزانية
+                                متوسطة</span></label>
+                        <input type="range" id="budget-slider" class="range-slider" min="1" max="3" value="2" step="1">
+                    </div>
+
+                    <div class="form-group">
+                        <label>الاهتمامات والتجارب</label>
+                        <div class="tags-grid">
+                            <button class="tag-btn selected" onclick="toggleTag(this)">طعام محلي</button>
+                            <button class="tag-btn selected" onclick="toggleTag(this)">طبيعة ومغامرة</button>
+                            <button class="tag-btn selected" onclick="toggleTag(this)">تاريخ وآثار</button>
+                            <button class="tag-btn" onclick="toggleTag(this)">ثقافة وفنون</button>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-generate" id="btn-save-plan">
+                    <i class="fa-solid fa-lock" id="btn-lock-icon"></i>
+                    <span>إنشاء المسار التفاعلي</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="suggested-section">
+            <div class="section-header">
+                <h2>أماكن مقترحة للزيارة</h2>
+                <p>وجهات وتجارب مميزة يُنصح بها أثناء تخطيط رحلتك المقبلة</p>
+            </div>
+
+            <div class="places-grid">
+                <div class="place-card">
+                    <div class="place-img-wrapper">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Treasury_petra_crop.jpeg"
+                            alt="البتراء">
+                        <span class="place-tag">تاريخ وآثار</span>
+                    </div>
+                    <div class="place-content">
+                        <div>
+                            <h3>البتراء (المدينة الوردية)</h3>
+                            <p>عاصمة النبطيين القديمة المحفورة في الصخور الورديّة، إحدى عجائب الدنيا السبع الحديثة.</p>
+                        </div>
+                        <div class="place-footer">
+                            <span>تستحق 1-2 يوم</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="place-card">
+                    <div class="place-img-wrapper">
+                        <img src="./wadi rum.jpg" alt="وادي رم">
+                        <span class="place-tag">طبيعة ومغامرة</span>
+                    </div>
+                    <div class="place-content">
+                        <div>
+                            <h3>وادي رم (وادي القمر)</h3>
+                            <p>صحراء خلابة وجبال رملية مميزة توفر تجربة تخييم بدوية ورصد النجوم وتجول بالسيارات
+                                الرباعية.</p>
+                        </div>
+                        <div class="place-footer">
+                            <span>تستحق 1 يوم</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="place-card">
+                    <div class="place-img-wrapper">
+                        <img src="./jarash.webp" alt="جرش">
+                        <span class="place-tag">ثقافة وتاريخ</span>
+                    </div>
+                    <div class="place-content">
+                        <div>
+                            <h3>مدينة جرش الأثرية</h3>
+                            <p>واحدة من أفضل المدن الرومانية المحفوظة في العالم، وتتميز بأعمدتها الممتدة ومسارحها
+                                العريقة.</p>
+                        </div>
+                        <div class="place-footer">
+                            <span>تستحق ٤ ساعات</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="place-card">
+                    <div class="place-img-wrapper">
+                        <img src="./dead see.jpg" alt="البحر الميت">
+                        <span class="place-tag">استرخاء وعلاج</span>
+                    </div>
+                    <div class="place-content">
+                        <div>
+                            <h3>البحر الميت</h3>
+                            <p>أخفض نقطة على سطح الأرض، مشهور بمياهه الغنية بالمعادن وطينه الطبيعي العلاجي.</p>
+                        </div>
+                        <div class="place-footer">
+                            <span>تستحق 1 يوم</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="view-route" class="view-section">
+        <h2 style="font-size: 1.8rem; font-weight: 900;">المسار التفاعلي المخصص</h2>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.8rem;" id="route-subtitle">
+            مسار محدد بناءً على إعداداتك
+        </p>
+
+        <div class="route-container">
+            <div class="itinerary-panel" id="itinerary-list"></div>
+
+            <div class="map-panel">
+                <img src="./jordan.jpg" alt="jo">
+                <svg width="100%" height="100%" viewBox="0 0 500 500">
+                    <path d="M 60 110 Q 160 60 260 130 T 440 110" stroke="rgba(200,90,50,0.3)" stroke-width="3"
+                        fill="none" />
+                    <path d="M 180 130 L 230 230 L 290 390" stroke="#C85A32" stroke-width="4" stroke-dasharray="7,7"
+                        fill="none" />
+                    <circle cx="180" cy="130" r="10" fill="#52634F" />
+                    <text x="195" y="135" font-family="Cairo" font-size="13" font-weight="800"
+                        fill="#1F2421">البتراء</text>
+                    <circle cx="230" cy="230" r="8" fill="#C85A32" />
+                    <text x="245" y="235" font-family="Cairo" font-size="12" font-weight="800" fill="#C85A32">السيق
+                        البارد (جوهرة مخفية)</text>
+                    <circle cx="290" cy="390" r="10" fill="#52634F" />
+                    <text x="305" y="395" font-family="Cairo" font-size="13" font-weight="800" fill="#1F2421">وادي
+                        رم</text>
+                </svg>
+
+                <div class="map-overlay-card">
+                    <img src="./images.jpg" alt="route"
+                        style="width: 100%; max-height: 160px; object-fit: cover; border-radius: 8px; margin-bottom: 0.8rem; display: block;" />
+                    <h4 style="color: var(--darb-red); font-weight: 800; margin-bottom: 0.3rem;">
+                        <i class="fa-solid fa-route"></i> خيط القصة والربط
+                    </h4>
+                    <p style="font-size: 0.85rem; color: var(--text-dark);">
+                        ربط المسار الرئيسي بالنقاط المجتمعية والتجارب المحلية المجاورة.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="view-passport" class="view-section">
+        <div class="passport-header-bg">
+            <img src="./post cards.jpg" alt="passport">
+            <h2 style="font-size: 1.8rem; font-weight: 900; text-shadow: 0 2px 6px rgba(0,0,0,0.5);">جواز السفر الرقمي
+                والأختام المكتسبة</h2>
+        </div>
+
+        <div class="passport-layout">
+            <div>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.8rem;">تُحفظ الأختام المكتسبة
+                    مباشرة في حسابك وقاعدة البيانات</p>
+
+                <div class="stamps-grid" id="stamps-container"></div>
+
+                <button class="btn-stamp-trigger" id="btn-claim-stamp">
+                    <i class="fa-solid fa-location-dot"></i> تسجيل الوصول بالـ GPS (قلعة الشوبك)
+                </button>
+            </div>
+
+            <div class="profile-sidebar">
+                <i class="fa-solid fa-user-circle"
+                    style="font-size: 4.5rem; color: var(--olive-green); margin-bottom: 0.8rem;"></i>
+                <div class="user-name" id="profile-name" style="font-weight: 900; font-size: 1.2rem;">زائر</div>
+                <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;" id="sync-status">وضع
+                    العرض المحلي</div>
+
+                <button id="sidebar-logout-btn" class="btn-logout-danger"
+                    style="margin-top: 1.2rem; width: 100%; border-radius: var(--radius-md);" onclick="logoutUser()">
+                    <i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal-overlay" id="auth-modal">
+        <div class="modal-card">
+            <span class="close-modal" id="close-modal-btn">&times;</span>
+            <div id="auth-notice" class="auth-notice">
+                <i class="fa-solid fa-lock"></i> يرجى تسجيل الدخول أولاً لتكن قادراً على إنشاء وبناء مسار رحلتك!
+            </div>
+            <h3 id="modal-title" style="font-size: 1.3rem; font-weight: 800; margin-bottom: 1.2rem;">تسجيل الدخول / حساب
+                جديد</h3>
+            <form id="auth-form" novalidate>
+                <input type="email" id="auth-email" placeholder="البريد الإلكتروني (مثال: name@domain.com)" required>
+                <div id="email-error" class="error-msg">البريد الإلكتروني غير صحيح أو غير موجود!</div>
+
+                <input type="password" id="auth-password" placeholder="كلمة المرور (٦ خانات على الأقل)" required
+                    minlength="6">
+                <div id="pass-error" class="error-msg">كلمة المرور قصيرة جداً!</div>
+
+                <button type="submit" class="btn-submit">تسجيل الدخول / إنشاء حساب</button>
+            </form>
+            <button class="btn-google" id="btn-google-auth"><i class="fa-brands fa-google"></i> متابعة بواسطة
+                Google</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>فريق DevCore &copy; 2026 - مشروع درب (DARB) | التصميم الوثائقي التفاعلي</p>
+    </footer>
+
+    <script type="module" src="./script.js"></script>
+</body>
+
+</html>
